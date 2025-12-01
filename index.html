@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHAHEEN 🦅</title>
+<title>SHAHEEN YOUTUBE DOWNLOADER 🦅</title>
 
 <style>
 /* --- General Styles --- */
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:transparent!important;color:#fff;font-family:Arial, sans-serif;overflow:hidden;}
 
-/* --- Splash Screen & Start Button --- */
+/* --- Splash Screen & Start Button (SHAHEEN THEME) --- */
 .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;justify-content:center;align-items:center;z-index:1000;}
 .splash-screen.hidden{display:none}
+/* SHAHEEN Gradient: Purple-Cyan */
 .start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);transition: transform 0.2s;}
 .start-btn:active{transform:scale(0.95);}
 
@@ -23,13 +24,13 @@ html,body{width:100%;height:100%;background:transparent!important;color:#fff;fon
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:0;}
 .container{position:relative;z-index:5;width:100%;height:100%;padding:20px;overflow-y:auto;display:flex;flex-direction:column;max-width: 600px; margin: 0 auto;}
 
-/* --- Header --- */
+/* --- Header (SHAHEEN THEME) --- */
 header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
 .header-left h1{font-size:24px;background:linear-gradient(90deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight: 800;text-transform: uppercase;letter-spacing: 1px;}
 .back-btn{padding:8px 15px;border-radius:6px;border:1px solid #ef4444;background:rgba(239, 68, 68, 0.15);color:#fca5a5;font-weight:bold;cursor:pointer;font-size: 12px;}
 .section{width:100%;background:rgba(0,0,0,0.6);padding:20px;border-radius:15px;border: 1px solid rgba(255,255,255,0.05);margin-bottom:20px;}
 
-/* --- Input and Button Styles --- */
+/* --- Input and Button Styles (SHAHEEN THEME) --- */
 .input-field {
     width: 100%;
     padding: 15px;
@@ -41,6 +42,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     outline: none;
     text-align: center;
 }
+/* SHAHEEN Gradient: Purple-Cyan */
 .fetch-btn{width:100%;padding:14px;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;text-transform: uppercase;letter-spacing: 1px;box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);}
 .fetch-btn:disabled{ opacity: 0.7; cursor: wait; }
 
@@ -52,7 +54,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     padding-top: 5px;
 }
 .video-title {
-    color: #06b6d4;
+    color: #06b6d4; /* Cyan color for title */
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 15px;
@@ -71,7 +73,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 }
 .download-quality {
     font-weight: bold;
-    color: #a855f7;
+    color: #a855f7; /* Purple for quality */
 }
 .download-link {
     text-decoration: none;
@@ -89,7 +91,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 }
 
 /* --- Utility/Feedback Styles --- */
-.loader {border: 3px solid rgba(255, 255, 255, 0.1);border-radius: 50%;border-top: 3px solid #06b6d4;width: 30px; height: 30px;animation: spin 0.8s linear infinite;margin: 10px auto;display: none;}
+.loader {border: 3px solid rgba(255, 255, 255, 0.1);border-radius: 50%;border-top: 3px solid #06b6d4; /* Cyan loader */ width: 30px; height: 30px;animation: spin 0.8s linear infinite;margin: 10px auto;display: none;}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .error-message {margin-top:15px;padding:12px;background:rgba(220, 38, 38, 0.2);border-left: 4px solid #ef4444;color: #fca5a5;border-radius:4px;display:none;text-align: left;font-size: 14px;}
 .error-message.show{display:block}
@@ -139,7 +141,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 </div>
 
 <script>
-// ⭐ PRIMARY API URL (as provided by you) ⭐
+// ⭐ API URL (as provided by you) ⭐
 const DOWNLOAD_API_BASE_URL = "https://api-rebix.zone.id/api/ytvi";
 const YOUTUBE_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
 
@@ -147,10 +149,9 @@ function startApp(){
     document.getElementById("splashScreen").classList.add("hidden");
     document.getElementById("mainApp").classList.add("active");
     
-    // ⭐ Background Audio Fix: Attempt unmuted play on user click ⭐
+    // Background Audio Fix: Attempts unmuted play on user click
     let video = document.getElementById("videoBg");
     video.play().catch(e => {
-        // This catch block handles cases where the browser blocks unmuted autoplay
         console.warn("Autoplay blocked (needs unmuted):", e.name);
     }); 
 }
@@ -161,7 +162,6 @@ function createDownloadItem(qualityLabel, url, type, quality, filenameSuffix) {
     const bgColor = isAudio ? 'rgba(168, 85, 247, 0.2)' : 'rgba(255, 255, 255, 0.1)';
     const extension = isAudio ? 'mp3' : 'mp4';
     
-    // Download link will redirect and download the file with a clean name
     const downloadName = `${qualityLabel.replace(/[\s\(\)]/g, '_')}_${filenameSuffix}.${extension}`;
 
     return `
@@ -211,7 +211,7 @@ async function fetchDownloadLinks(){
 
         const data = await response.json();
         
-        // ⭐ PARSING THE CONFIRMED STRUCTURE: results[] and audResults ⭐
+        // Parsing the structure: results[] and audResults
         const videoFormats = data.results;
         const audioFormat = data.audResults;
         const videoId = data.videoId || 'Video';
@@ -261,9 +261,9 @@ function displayResults(videoId, videoFormats, audioFormat){
          });
 
          videoFormats.forEach((format) => {
-            // Check for status true and the URL existence
             if (format.downloadUrl && format.status === true) {
-                const qualityLabel = `MP4 ${format.quality.toUpperCase()}`;
+                // Warning added for user about Video Only
+                const qualityLabel = `MP4 ${format.quality.toUpperCase()} (Video Only)`; 
                 htmlContent += createDownloadItem(qualityLabel, format.downloadUrl, 'Video', format.quality, videoId);
             }
         });
@@ -277,4 +277,4 @@ function displayResults(videoId, videoFormats, audioFormat){
 }
 </script>
 </body>
-</html>
+    </html>
