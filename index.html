@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHAHEEN 🦅</title>
+
+<style>
+/* --- General Styles --- */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:transparent!important;color:#fff;font-family:Arial, sans-serif;overflow:hidden;}
+
+/* --- Splash Screen & Start Button --- */
+.splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;justify-content:center;align-items:center;z-index:1000;}
+.splash-screen.hidden{display:none}
+.start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);transition: transform 0.2s;}
+.start-btn:active{transform:scale(0.95);}
+
+/* --- Main App Container --- */
+.main-app{display:none; width:100%; height:100%;}
+.main-app.active{display:block}
+.video-bg{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;opacity: 0.7;}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:0;}
+.container{position:relative;z-index:5;width:100%;height:100%;padding:20px;overflow-y:auto;display:flex;flex-direction:column;max-width: 600px; margin: 0 auto;}
+
+/* --- Header --- */
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.header-left h1{font-size:24px;background:linear-gradient(90deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight: 800;text-transform: uppercase;letter-spacing: 1px;}
+.back-btn{padding:8px 15px;border-radius:6px;border:1px solid #ef4444;background:rgba(239, 68, 68, 0.15);color:#fca5a5;font-weight:bold;cursor:pointer;font-size: 12px;}
+.section{width:100%;background:rgba(0,0,0,0.6);padding:20px;border-radius:15px;border: 1px solid rgba(255,255,255,0.05);margin-bottom:20px;}
+
+/* --- Input and Button Styles --- */
+.input-field {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255,255,255,.1);
+    color: #fff;
+    border: 1px solid rgba(168,85,247,.3);
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    text-align: center;
+}
+.fetch-btn{width:100%;padding:14px;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;text-transform: uppercase;letter-spacing: 1px;box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);}
+.fetch-btn:disabled{ opacity: 0.7; cursor: wait; }
+
+/* --- Results Display --- */
+.results-display {
+    min-height: 150px;
+    color: #f0f0f0;
+    text-align: left;
+    padding-top: 5px;
+}
+.video-title {
+    color: #06b6d4;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+.download-item {
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+}
+.download-quality {
+    font-weight: bold;
+    color: #a855f7;
+}
+.download-link {
+    text-decoration: none;
+    background: #4ade80; 
+    color: #166534;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+.download-link:hover {
+    background: #22c55e;
+}
+
+/* --- Utility/Feedback Styles --- */
+.loader {border: 3px solid rgba(255, 255, 255, 0.1);border-radius: 50%;border-top: 3px solid #06b6d4;width: 30px; height: 30px;animation: spin 0.8s linear infinite;margin: 10px auto;display: none;}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.error-message {margin-top:15px;padding:12px;background:rgba(220, 38, 38, 0.2);border-left: 4px solid #ef4444;color: #fca5a5;border-radius:4px;display:none;text-align: left;font-size: 14px;}
+.error-message.show{display:block}
+</style>
+</head>
+
+<body>
+
+<div class="splash-screen" id="splashScreen">
+    <button class="start-btn" onclick="startApp()">START SHAHEEN DOWNLOADER 🦅</button>
+</div>
+
+<div class="main-app" id="mainApp">
+    <video class="video-bg" id="videoBg" autoplay loop playsinline>
+        <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Fauzuna/0d8386c8d7fa219d8a3390a01ba59402d7b31dab/AQPYKYVB-nMO-Ray4szZJNQQ3QMxLMzxeRYxOgW2bFyfnEB9m7qPgNqa0mY7l9gcciWi1SarcQgjp0Jk6Ttxa24kVYMMqMFOyUCWh5o.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <header>
+            <div class="header-left"><h1>SHAHEEN PRESENTS</h1></div>
+            <button class="back-btn" onclick="location.reload()">RESET</button>
+        </header>
+
+        <div class="section">
+            <div class="input-group">
+                <input type="text" id="videoUrlInput" class="input-field" placeholder="Enter YouTube Video URL (e.g., https://youtu.be/xvpQnLxhKnc)">
+            </div>
+            
+            <p class="help-text" style="color:#aaa; font-size: 12px; margin-bottom: 10px;">
+                
+            </p>
+            <button class="fetch-btn" id="fetchBtn" onclick="fetchDownloadLinks()">
+                <span id="btnText">FETCH DOWNLOAD LINKS</span>
+            </button>
+            <div class="loader" id="loader"></div>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+
+        <div class="section results-display" id="resultsDisplay">
+            <div style="color: #9ca3af;">
+                Download links will appear here after fetching.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ⭐ PRIMARY API URL (as provided by you) ⭐
+const DOWNLOAD_API_BASE_URL = "https://api-rebix.zone.id/api/ytvi";
+const YOUTUBE_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+
+function startApp(){
+    document.getElementById("splashScreen").classList.add("hidden");
+    document.getElementById("mainApp").classList.add("active");
+    
+    // ⭐ Background Audio Fix: Attempt unmuted play on user click ⭐
+    let video = document.getElementById("videoBg");
+    video.play().catch(e => {
+        // This catch block handles cases where the browser blocks unmuted autoplay
+        console.warn("Autoplay blocked (needs unmuted):", e.name);
+    }); 
+}
+
+// Helper function to create download item HTML
+function createDownloadItem(qualityLabel, url, type, quality, filenameSuffix) {
+    const isAudio = type === 'Audio';
+    const bgColor = isAudio ? 'rgba(168, 85, 247, 0.2)' : 'rgba(255, 255, 255, 0.1)';
+    const extension = isAudio ? 'mp3' : 'mp4';
+    
+    // Download link will redirect and download the file with a clean name
+    const downloadName = `${qualityLabel.replace(/[\s\(\)]/g, '_')}_${filenameSuffix}.${extension}`;
+
+    return `
+        <div class="download-item" style="background: ${bgColor};">
+            <div class="download-item-info">
+                <span class="download-quality">${qualityLabel.toUpperCase()}</span> 
+                <span style="color:#aaa;">(${type})</span>
+            </div>
+            <a href="${url}" target="_blank" class="download-link" download="${downloadName}">DOWNLOAD</a>
+        </div>
+    `;
+}
+
+async function fetchDownloadLinks(){
+    let url = document.getElementById("videoUrlInput").value.trim();
+    
+    let resultsDisplay = document.getElementById("resultsDisplay");
+    let btn = document.getElementById("fetchBtn");
+    let btnText = document.getElementById("btnText");
+    let loader = document.getElementById("loader");
+    let errorDiv = document.getElementById("errorMessage");
+
+    if(!url || !YOUTUBE_URL_REGEX.test(url)){
+        errorDiv.textContent = "⚠️ Please enter a valid YouTube video URL.";
+        errorDiv.classList.add("show");
+        resultsDisplay.innerHTML = '<div style="color: #9ca3af;">Download links will appear here after fetching.</div>';
+        return;
+    }
+
+    resultsDisplay.innerHTML = '<div style="color: #9ca3af;">Fetching links, please wait...</div>';
+    errorDiv.classList.remove("show");
+    btn.disabled = true;
+    btnText.textContent = "FETCHING...";
+    loader.style.display = "block";
+
+    try{
+        const apiUrl = `${DOWNLOAD_API_BASE_URL}?url=${encodeURIComponent(url)}`;
+
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            signal: AbortSignal.timeout(60000) 
+        });
+
+        if(!response.ok){
+            throw new Error(`Server Error: ${response.status}. API might be experiencing issues.`);
+        }
+
+        const data = await response.json();
+        
+        // ⭐ PARSING THE CONFIRMED STRUCTURE: results[] and audResults ⭐
+        const videoFormats = data.results;
+        const audioFormat = data.audResults;
+        const videoId = data.videoId || 'Video';
+        const statusOk = data.status === true;
+
+        if (statusOk && (videoFormats || audioFormat)) {
+            displayResults(videoId, videoFormats, audioFormat);
+        } else if (!statusOk) {
+             throw new Error(`API Status False. Message: ${data.message || 'Video not available or restricted.'}`);
+        } else {
+            throw new Error(`API returned an unexpected structure or empty data.`);
+        }
+
+    } catch(error){
+        console.error("API Fetch Failed:", error);
+        let displayMessage = `❌ Fetch failed: ${error.message}`;
+        errorDiv.textContent = displayMessage;
+        errorDiv.classList.add("show");
+        resultsDisplay.innerHTML = '<div style="color: #fca5a5;">Error during link retrieval.</div>';
+    }
+
+    // Final UI Reset
+    btn.disabled = false;
+    btnText.textContent = "FETCH DOWNLOAD LINKS";
+    loader.style.display = "none";
+}
+
+// Function to display fetched data
+function displayResults(videoId, videoFormats, audioFormat){
+    const displayElement = document.getElementById("resultsDisplay");
+    displayElement.innerHTML = `<div class="video-title">Video ID: ${videoId}</div>`;
+
+    let htmlContent = '';
+    
+    // 1. Display Audio Result (MP3)
+    if (audioFormat && audioFormat.downloadUrl) {
+        const qualityLabel = `MP3 ${audioFormat.quality || '128kbps'}`;
+        htmlContent += createDownloadItem(qualityLabel, audioFormat.downloadUrl, 'Audio', 'audio', videoId);
+    }
+
+    // 2. Display Video Results (MP4)
+    if (videoFormats && Array.isArray(videoFormats)) {
+         // Sort by quality (high to low)
+         videoFormats.sort((a, b) => {
+            const getNum = (q) => parseInt(q.replace('p', ''), 10) || 0;
+            return getNum(b.quality) - getNum(a.quality);
+         });
+
+         videoFormats.forEach((format) => {
+            // Check for status true and the URL existence
+            if (format.downloadUrl && format.status === true) {
+                const qualityLabel = `MP4 ${format.quality.toUpperCase()}`;
+                htmlContent += createDownloadItem(qualityLabel, format.downloadUrl, 'Video', format.quality, videoId);
+            }
+        });
+    }
+    
+    displayElement.innerHTML += htmlContent;
+
+    if (!htmlContent) {
+         displayElement.innerHTML = '<div style="color: #fca5a5;">Could not find any successful video or audio download links. Please check the URL or try again.</div>';
+    }
+}
+</script>
+</body>
+</html>
