@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHAHEEN YOUTUBE DOWNLOADER 🦅</title>
+<title>SHAHEEN AIO DOWNLOADER 🦅</title>
 
 <style>
 /* --- General Styles --- */
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:transparent!important;color:#fff;font-family:Arial, sans-serif;overflow:hidden;}
+html,body{width:100%;height:100%;background:transparent!important;color:#fff;font-family:Arial, sans-serif;overflow-x:hidden;}
 
-/* --- Splash Screen & Start Button (SHAHEEN THEME) --- */
+/* --- Splash Screen & Start Button (SHAHEEN THEME: Green/Purple/Red) --- */
 .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;justify-content:center;align-items:center;z-index:1000;}
 .splash-screen.hidden{display:none}
-/* SHAHEEN Gradient: Purple-Cyan */
-.start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);transition: transform 0.2s;}
+.start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg,#06b6d4,#10b981); /* Cyan-Green Gradient (New Shaheen Vibe) */ color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);transition: transform 0.2s;}
 .start-btn:active{transform:scale(0.95);}
 
 /* --- Main App Container --- */
@@ -26,8 +25,8 @@ html,body{width:100%;height:100%;background:transparent!important;color:#fff;fon
 
 /* --- Header (SHAHEEN THEME) --- */
 header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.header-left h1{font-size:24px;background:linear-gradient(90deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight: 800;text-transform: uppercase;letter-spacing: 1px;}
-.back-btn{padding:8px 15px;border-radius:6px;border:1px solid #ef4444;background:rgba(239, 68, 68, 0.15);color:#fca5a5;font-weight:bold;cursor:pointer;font-size: 12px;}
+.header-left h1{font-size:24px;background:linear-gradient(90deg,#10b981,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight: 800;text-transform: uppercase;letter-spacing: 1px;}
+.back-btn{padding:8px 15px;border-radius:6px;border:1px solid #10b981;background:rgba(16, 185, 129, 0.15);color:#a7f3d0;font-weight:bold;cursor:pointer;font-size: 12px;}
 .section{width:100%;background:rgba(0,0,0,0.6);padding:20px;border-radius:15px;border: 1px solid rgba(255,255,255,0.05);margin-bottom:20px;}
 
 /* --- Input and Button Styles (SHAHEEN THEME) --- */
@@ -36,31 +35,41 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     padding: 15px;
     background: rgba(255,255,255,.1);
     color: #fff;
-    border: 1px solid rgba(168,85,247,.3);
+    border: 1px solid rgba(16, 185, 129, 0.3);
     border-radius: 10px;
     font-size: 16px;
     outline: none;
     text-align: center;
 }
-/* SHAHEEN Gradient: Purple-Cyan */
-.fetch-btn{width:100%;padding:14px;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;text-transform: uppercase;letter-spacing: 1px;box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);}
+.fetch-btn{width:100%;padding:14px;background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;text-transform: uppercase;letter-spacing: 1px;box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);}
 .fetch-btn:disabled{ opacity: 0.7; cursor: wait; }
 
-/* --- Results Display --- */
+/* --- Results Display (Download Links) --- */
 .results-display {
     min-height: 150px;
     color: #f0f0f0;
     text-align: left;
     padding-top: 5px;
 }
-.video-title {
-    color: #06b6d4; /* Cyan color for title */
+.video-info-container {
+    padding-top: 15px; 
+    border-top: 1px dashed rgba(255, 255, 255, 0.1); 
+    margin-top: 15px;
+}
+.video-info h3 {
     font-size: 1.1em;
     font-weight: bold;
-    margin-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
+    color: #06b6d4; /* Cyan Accent */
+    margin-bottom: 10px;
 }
+.video-info p {
+    font-size: 0.9em;
+    color: #ddd;
+    font-weight: normal;
+    white-space: pre-wrap; 
+}
+
+/* New style for the link wrapper */
 .download-item {
     background: rgba(255, 255, 255, 0.1);
     margin-bottom: 8px;
@@ -69,29 +78,54 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background 0.2s;
 }
-.download-quality {
+/* Quality and Size Info Style */
+.download-item-info {
+    color:#ddd; 
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.download-item-quality {
+    font-size: 1em;
     font-weight: bold;
-    color: #a855f7; /* Purple for quality */
+    margin-bottom: 3px;
 }
+.download-item-size {
+    font-size: 0.8em;
+    color: #9ca3af;
+}
+
+/* Quality Button Style */
 .download-link {
+    cursor: pointer; 
     text-decoration: none;
-    background: #4ade80; 
-    color: #166534;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 5px;
     font-size: 0.9em;
     font-weight: bold;
     text-transform: uppercase;
     transition: background 0.2s;
+    text-align: center;
+    min-width: 120px; 
+}
+/* Style for Video Link */
+.download-link.video {
+    background: #10b981; /* Shaheen Green */
+    color: #042f21;
+}
+/* Style for Audio Link */
+.download-link.audio {
+    background: #06b6d4; /* Shaheen Cyan */
+    color: #fff;
 }
 .download-link:hover {
-    background: #22c55e;
+    opacity: 0.8;
 }
 
 /* --- Utility/Feedback Styles --- */
-.loader {border: 3px solid rgba(255, 255, 255, 0.1);border-radius: 50%;border-top: 3px solid #06b6d4; /* Cyan loader */ width: 30px; height: 30px;animation: spin 0.8s linear infinite;margin: 10px auto;display: none;}
+.loader {border: 3px solid rgba(255, 255, 255, 0.1);border-radius: 50%;border-top: 3px solid #10b981; /* Green loader */ width: 30px; height: 30px;animation: spin 0.8s linear infinite;margin: 10px auto;display: none;}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .error-message {margin-top:15px;padding:12px;background:rgba(220, 38, 38, 0.2);border-left: 4px solid #ef4444;color: #fca5a5;border-radius:4px;display:none;text-align: left;font-size: 14px;}
 .error-message.show{display:block}
@@ -101,7 +135,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 <body>
 
 <div class="splash-screen" id="splashScreen">
-    <button class="start-btn" onclick="startApp()">START SHAHEEN DOWNLOADER 🦅</button>
+    <button class="start-btn" onclick="startApp()">START SHAHEEN AIO DOWNLOADER 🦅</button>
 </div>
 
 <div class="main-app" id="mainApp">
@@ -113,17 +147,17 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
     <div class="container">
         <header>
-            <div class="header-left"><h1>SHAHEEN PRESENTS</h1></div>
+            <div class="header-left"><h1>SHAHEEN AIO DOWNLOADER</h1></div>
             <button class="back-btn" onclick="location.reload()">RESET</button>
         </header>
 
         <div class="section">
             <div class="input-group">
-                <input type="text" id="videoUrlInput" class="input-field" placeholder="Enter YouTube Video URL (e.g., https://youtu.be/xvpQnLxhKnc)">
+                <input type="text" id="videoUrlInput" class="input-field" placeholder="Enter Video URL (YouTube, TikTok, Instagram, etc.)">
             </div>
             
             <p class="help-text" style="color:#aaa; font-size: 12px; margin-bottom: 10px;">
-                
+                💡 SHAHEEN AIO System. Enter any valid social media video link.
             </p>
             <button class="fetch-btn" id="fetchBtn" onclick="fetchDownloadLinks()">
                 <span id="btnText">FETCH DOWNLOAD LINKS</span>
@@ -131,49 +165,84 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
             <div class="loader" id="loader"></div>
             <div class="error-message" id="errorMessage"></div>
         </div>
-
+        
         <div class="section results-display" id="resultsDisplay">
             <div style="color: #9ca3af;">
                 Download links will appear here after fetching.
             </div>
         </div>
+
     </div>
 </div>
 
 <script>
-// ⭐ API URL (as provided by you) ⭐
-const DOWNLOAD_API_BASE_URL = "https://api-rebix.zone.id/api/ytvi";
-const YOUTUBE_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+// ⭐ AIO API URL (TOXXIC API) ⭐
+const AIO_API_BASE_URL = "https://api-toxxic.zone.id/api/downloader/aio";
 
 function startApp(){
     document.getElementById("splashScreen").classList.add("hidden");
     document.getElementById("mainApp").classList.add("active");
     
-    // Background Audio Fix: Attempts unmuted play on user click
     let video = document.getElementById("videoBg");
     video.play().catch(e => {
         console.warn("Autoplay blocked (needs unmuted):", e.name);
     }); 
 }
 
-// Helper function to create download item HTML
-function createDownloadItem(qualityLabel, url, type, quality, filenameSuffix) {
-    const isAudio = type === 'Audio';
-    const bgColor = isAudio ? 'rgba(168, 85, 247, 0.2)' : 'rgba(255, 255, 255, 0.1)';
-    const extension = isAudio ? 'mp3' : 'mp4';
-    
-    const downloadName = `${qualityLabel.replace(/[\s\(\)]/g, '_')}_${filenameSuffix}.${extension}`;
-
-    return `
-        <div class="download-item" style="background: ${bgColor};">
-            <div class="download-item-info">
-                <span class="download-quality">${qualityLabel.toUpperCase()}</span> 
-                <span style="color:#aaa;">(${type})</span>
-            </div>
-            <a href="${url}" target="_blank" class="download-link" download="${downloadName}">DOWNLOAD</a>
-        </div>
-    `;
+// ⭐ Force Download Function (Ensures automatic download) ⭐
+function forceDownload(event, url, filename) {
+    event.preventDefault(); 
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.rel = 'noreferrer'; 
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    console.log(`Download attempt for: ${filename}`);
 }
+
+// Helper to convert bytes (if present) into readable size (MB/KB)
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0 || typeof bytes !== 'number') return 'Size N/A';
+    if (bytes < 0) return 'Size N/A';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+/**
+ * Fetches Content-Length header using a HEAD request to get file size.
+ * Uses a 20s timeout for slow servers.
+ * @param {string} url - The direct download URL.
+ * @returns {Promise<number|null>} File size in bytes or null on failure.
+ */
+async function fetchFileSize(url) {
+    if (!url) return null;
+    try {
+        const response = await fetch(url, {
+            method: 'HEAD',
+            mode: 'cors', 
+            signal: AbortSignal.timeout(20000) 
+        });
+
+        const contentLength = response.headers.get('Content-Length');
+        
+        if (response.ok && contentLength) {
+            return parseInt(contentLength, 10);
+        }
+        return null;
+    } catch (error) {
+        // console.warn(`Could not fetch size for URL: ${url}. Error:`, error.message);
+        return null;
+    }
+}
+
 
 async function fetchDownloadLinks(){
     let url = document.getElementById("videoUrlInput").value.trim();
@@ -184,21 +253,21 @@ async function fetchDownloadLinks(){
     let loader = document.getElementById("loader");
     let errorDiv = document.getElementById("errorMessage");
 
-    if(!url || !YOUTUBE_URL_REGEX.test(url)){
-        errorDiv.textContent = "⚠️ Please enter a valid YouTube video URL.";
+    if(!url || !url.startsWith('http')){
+        errorDiv.textContent = "⚠️ Please enter a valid URL (starting with http or https).";
         errorDiv.classList.add("show");
         resultsDisplay.innerHTML = '<div style="color: #9ca3af;">Download links will appear here after fetching.</div>';
         return;
     }
 
-    resultsDisplay.innerHTML = '<div style="color: #9ca3af;">Fetching links, please wait...</div>';
+    resultsDisplay.innerHTML = '<div style="color: #9ca5af;">Fetching links for URL: ' + url + '...</div>';
     errorDiv.classList.remove("show");
     btn.disabled = true;
     btnText.textContent = "FETCHING...";
     loader.style.display = "block";
 
     try{
-        const apiUrl = `${DOWNLOAD_API_BASE_URL}?url=${encodeURIComponent(url)}`;
+        const apiUrl = `${AIO_API_BASE_URL}?url=${encodeURIComponent(url)}`;
 
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -206,23 +275,29 @@ async function fetchDownloadLinks(){
         });
 
         if(!response.ok){
-            throw new Error(`Server Error: ${response.status}. API might be experiencing issues.`);
+            const errorStatus = response.status;
+            let errorMessageText = `Server Error: ${errorStatus}. SHAHEEN system is facing an issue.`;
+            
+            try {
+                const errorData = await response.json();
+                if (errorData.message) {
+                    errorMessageText += ` API Message: ${errorData.message}`;
+                } else if (errorData.result === false && errorData.data) {
+                    errorMessageText += ` API Result Message: ${errorData.data.error || 'Video not found.'}`;
+                }
+            } catch(e) { /* silent fail */ }
+            
+            throw new Error(errorMessageText);
         }
 
         const data = await response.json();
         
-        // Parsing the structure: results[] and audResults
-        const videoFormats = data.results;
-        const audioFormat = data.audResults;
-        const videoId = data.videoId || 'Video';
-        const statusOk = data.status === true;
+        const statusOk = data.result === true && data.data;
 
-        if (statusOk && (videoFormats || audioFormat)) {
-            displayResults(videoId, videoFormats, audioFormat);
-        } else if (!statusOk) {
-             throw new Error(`API Status False. Message: ${data.message || 'Video not available or restricted.'}`);
+        if (statusOk) {
+            await displayDownloadLinks(data.data); 
         } else {
-            throw new Error(`API returned an unexpected structure or empty data.`);
+             throw new Error(`SHAHEEN System Error. Message: ${data.message || data.error || data.creator || 'Video not found or unsupported URL.'}`);
         }
 
     } catch(error){
@@ -230,49 +305,97 @@ async function fetchDownloadLinks(){
         let displayMessage = `❌ Fetch failed: ${error.message}`;
         errorDiv.textContent = displayMessage;
         errorDiv.classList.add("show");
-        resultsDisplay.innerHTML = '<div style="color: #fca5a5;">Error during link retrieval.</div>';
+        resultsDisplay.innerHTML = '<div style="color: #fca5a5;">Error during link retrieval. Please verify the URL.</div>';
     }
 
-    // Final UI Reset
     btn.disabled = false;
     btnText.textContent = "FETCH DOWNLOAD LINKS";
     loader.style.display = "none";
 }
 
-// Function to display fetched data
-function displayResults(videoId, videoFormats, audioFormat){
+// Function to dynamically display links and then fetch sizes
+async function displayDownloadLinks(result){
     const displayElement = document.getElementById("resultsDisplay");
-    displayElement.innerHTML = `<div class="video-title">Video ID: ${videoId}</div>`;
-
-    let htmlContent = '';
+    let linksHtml = '';
+    let infoHtml = '';
+    let foundLinks = 0;
     
-    // 1. Display Audio Result (MP3)
-    if (audioFormat && audioFormat.downloadUrl) {
-        const qualityLabel = `MP3 ${audioFormat.quality || '128kbps'}`;
-        htmlContent += createDownloadItem(qualityLabel, audioFormat.downloadUrl, 'Audio', 'audio', videoId);
-    }
+    const title = result.title || 'Video Title Not Found';
+    const filenameSuffix = title.replace(/\s/g, '_').replace(/[^a-zA-Z0-9._-]/g, '').substring(0, 30); 
+    
+    // 2. Build Links Section (UPPER PART)
+    const linkArray = result.medias; 
 
-    // 2. Display Video Results (MP4)
-    if (videoFormats && Array.isArray(videoFormats)) {
-         // Sort by quality (high to low)
-         videoFormats.sort((a, b) => {
-            const getNum = (q) => parseInt(q.replace('p', ''), 10) || 0;
-            return getNum(b.quality) - getNum(a.quality);
-         });
+    if (linkArray && Array.isArray(linkArray) && linkArray.length > 0) {
+        linkArray.forEach((linkItem, index) => {
+            const itemUrl = linkItem.url;
+            const itemQuality = linkItem.resolution || linkItem.quality; 
+            const itemType = linkItem.type || (linkItem.is_audio ? 'Audio' : 'Video');
+            
+            if (itemUrl && itemQuality) {
+                // Generate unique ID for the size display span
+                const itemId = `size-${index}-${Date.now()}`; 
+                
+                const extension = itemType === 'Audio' ? 'm4a' : 'mp4';
+                
+                linksHtml += `
+                    <div class="download-item" style="background: ${itemType === 'Audio' ? 'rgba(6, 182, 212, 0.2)' : 'rgba(255, 255, 255, 0.1)'};">
+                        <div class="download-item-info">
+                            <span class="download-item-quality">${itemType === 'Audio' ? '🎵' : '🎥'} ${itemQuality.toUpperCase()}</span>
+                            <span class="download-item-size" id="${itemId}">Fetching size...</span>
+                        </div>
+                        <a href="${itemUrl}" 
+                           onclick="forceDownload(event, '${itemUrl}', '${filenameSuffix}_${itemQuality.replace(/\s/g, '_')}.${extension}')" 
+                           class="download-link ${itemType === 'Audio' ? 'audio' : 'video'}">
+                            DOWNLOAD
+                        </a>
+                    </div>
+                `;
+                
+                // Asynchronously fetch size and update the span
+                setTimeout(() => {
+                    fetchFileSize(itemUrl).then(sizeInBytes => {
+                        const sizeSpan = document.getElementById(itemId);
+                        if (sizeSpan) {
+                            sizeSpan.textContent = `(${formatBytes(sizeInBytes)})`;
+                        }
+                    }).catch(e => {
+                         const sizeSpan = document.getElementById(itemId);
+                         if (sizeSpan) sizeSpan.textContent = '(Size N/A)';
+                    });
+                }, 100 * index); // Stagger requests for better performance
 
-         videoFormats.forEach((format) => {
-            if (format.downloadUrl && format.status === true) {
-                // Warning added for user about Video Only
-                const qualityLabel = `MP4 ${format.quality.toUpperCase()} (Video Only)`; 
-                htmlContent += createDownloadItem(qualityLabel, format.downloadUrl, 'Video', format.quality, videoId);
+                foundLinks++;
             }
         });
     }
-    
-    displayElement.innerHTML += htmlContent;
 
-    if (!htmlContent) {
-         displayElement.innerHTML = '<div style="color: #fca5a5;">Could not find any successful video or audio download links. Please check the URL or try again.</div>';
+    // 3. Build Info Section (LOWER PART - About/Title)
+    infoHtml += `
+        <div class="video-info-container">
+            <div class="video-info">
+                <h3>🦅 SHAHEEN DOWNLOADER 🦅</h3>
+                <p>
+                    **TITLE:** ${title}
+                </p>
+                <div style="font-size: 0.8em; color: #aaa; font-weight: normal; margin-top: 5px;">
+                    DOWNLOADER: SHAHEEN 🦅 (CREDIT: SHAHEEN)
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 4. Initial Output 
+    if (foundLinks > 0) {
+        displayElement.innerHTML = linksHtml + infoHtml;
+        
+    } else {
+        displayElement.innerHTML = `
+            <div style="color: #fca5a5;">
+                ❌ Download links could not be found for this URL. 
+                (Message: Video not found or link restricted.)
+            </div>
+        `;
     }
 }
 </script>
