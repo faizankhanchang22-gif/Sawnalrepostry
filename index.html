@@ -10,10 +10,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:transparent!important;color:#fff;font-family:Arial, sans-serif;overflow-x:hidden;}
 
-/* --- Splash Screen & Start Button (SHAHEEN THEME: Green/Purple/Red) --- */
+/* --- Splash Screen & Start Button (SHAHEEN THEME: Green/Cyan) --- */
 .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;justify-content:center;align-items:center;z-index:1000;}
 .splash-screen.hidden{display:none}
-.start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg,#06b6d4,#10b981); /* Cyan-Green Gradient (New Shaheen Vibe) */ color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);transition: transform 0.2s;}
+.start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg,#06b6d4,#10b981); /* Cyan-Green Gradient */ color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);transition: transform 0.2s;}
 .start-btn:active{transform:scale(0.95);}
 
 /* --- Main App Container --- */
@@ -59,7 +59,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .video-info h3 {
     font-size: 1.1em;
     font-weight: bold;
-    color: #06b6d4; /* Cyan Accent */
+    color: #06b6d4; 
     margin-bottom: 10px;
 }
 .video-info p {
@@ -112,12 +112,12 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 }
 /* Style for Video Link */
 .download-link.video {
-    background: #10b981; /* Shaheen Green */
+    background: #10b981; 
     color: #042f21;
 }
 /* Style for Audio Link */
 .download-link.audio {
-    background: #06b6d4; /* Shaheen Cyan */
+    background: #06b6d4; 
     color: #fff;
 }
 .download-link:hover {
@@ -189,7 +189,6 @@ function startApp(){
     }); 
 }
 
-// ⭐ Force Download Function (Ensures automatic download) ⭐
 function forceDownload(event, url, filename) {
     event.preventDefault(); 
     const a = document.createElement('a');
@@ -202,10 +201,8 @@ function forceDownload(event, url, filename) {
     console.log(`Download attempt for: ${filename}`);
 }
 
-// Helper to convert bytes (if present) into readable size (MB/KB)
 function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0 || typeof bytes !== 'number') return 'Size N/A';
-    if (bytes < 0) return 'Size N/A';
+    if (bytes === 0 || typeof bytes !== 'number' || bytes < 0) return 'Size N/A';
 
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
@@ -333,7 +330,6 @@ async function displayDownloadLinks(result){
             const itemType = linkItem.type || (linkItem.is_audio ? 'Audio' : 'Video');
             
             if (itemUrl && itemQuality) {
-                // Generate unique ID for the size display span
                 const itemId = `size-${index}-${Date.now()}`; 
                 
                 const extension = itemType === 'Audio' ? 'm4a' : 'mp4';
@@ -342,7 +338,7 @@ async function displayDownloadLinks(result){
                     <div class="download-item" style="background: ${itemType === 'Audio' ? 'rgba(6, 182, 212, 0.2)' : 'rgba(255, 255, 255, 0.1)'};">
                         <div class="download-item-info">
                             <span class="download-item-quality">${itemType === 'Audio' ? '🎵' : '🎥'} ${itemQuality.toUpperCase()}</span>
-                            <span class="download-item-size" id="${itemId}">Fetching size...</span>
+                            <span class="download-item-size" id="${itemId}">(Calculating...)</span> 
                         </div>
                         <a href="${itemUrl}" 
                            onclick="forceDownload(event, '${itemUrl}', '${filenameSuffix}_${itemQuality.replace(/\s/g, '_')}.${extension}')" 
@@ -361,9 +357,10 @@ async function displayDownloadLinks(result){
                         }
                     }).catch(e => {
                          const sizeSpan = document.getElementById(itemId);
-                         if (sizeSpan) sizeSpan.textContent = '(Size N/A)';
+                         // ⭐ CHANGED: Show Restriction/N/A on failure
+                         if (sizeSpan) sizeSpan.textContent = '(Restriction/N/A)'; 
                     });
-                }, 100 * index); // Stagger requests for better performance
+                }, 100 * index); 
 
                 foundLinks++;
             }
@@ -400,4 +397,4 @@ async function displayDownloadLinks(result){
 }
 </script>
 </body>
-    </html>
+</html>
